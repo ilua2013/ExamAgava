@@ -1,16 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Analytics : MonoBehaviour
 {
-    public void OnLevelComplete()
+    [SerializeField] private Player _player;
+    [SerializeField] private LevelCompleter _completer;
+    [SerializeField] private Button _saveButton;
+
+    private void OnValidate()
     {
-        print("Всё выдержали нахуй, ахуенно, вот это парилка нахуй, эхх, за этой парилкой и надо жить");
+        if(_player == null)
+            throw new System.Exception($"РќРµ РЅР°Р·РЅР°С‡РµРЅ РёРіСЂРѕРє РЅР° РѕР±СЉРµРєС‚Рµ {gameObject}");
+        if(_completer == null)
+            throw new System.Exception($"РќРµ РЅР°Р·РЅР°С‡РµРЅ РѕР±СЉРµРєС‚ Р·Р°РІРµСЂС€Р°СЋС‰РёР№ СѓСЂРѕРІРµРЅСЊ РЅР° РѕР±СЉРµРєС‚Рµ {gameObject}");
+        if(_saveButton == null)
+            throw new System.Exception($"РќРµ РЅР°Р·РЅР°С‡РµРЅР° РєРЅРѕРїРєР° СЃРѕС…СЂР°РЅРµРЅРёСЏ РґРµРЅРµРі РЅР° РѕР±СЉРµРєС‚Рµ {gameObject}");
     }
 
-    public void OnChangeMoney()
+    private void OnEnable()
     {
-        print("Рубль будет хэ-хэ");
+        _player.MoneyChanged += OnChangeMoney;
+        _completer.LevelCompleted += OnLevelComplete;
+        _saveButton.onClick.AddListener(SaveMoney);
+    }
+
+    private void OnDisable()
+    {
+        _player.MoneyChanged -= OnChangeMoney;
+        _completer.LevelCompleted -= OnLevelComplete;
+        _saveButton.onClick.RemoveListener(SaveMoney);
+    }
+
+    private void OnLevelComplete()
+    {
+        //Send on server
+    }
+
+    private void OnChangeMoney(int money)
+    {
+        //Send on server
+    }
+
+    private void SaveMoney()
+    {
+        //Send on server
     }
 }

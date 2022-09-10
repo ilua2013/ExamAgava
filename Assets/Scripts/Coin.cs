@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int _ammount;
+
+    private void OnValidate()
     {
-        
+        if(_ammount <= 0)
+            throw new System.Exception($"Неверно назначено значение на объекте {gameObject}");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int Ammount => _ammount;
 }
