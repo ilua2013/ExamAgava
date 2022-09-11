@@ -1,29 +1,26 @@
 using UnityEngine;
 
-
 public class Analytics : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerWallet _playerWallet;
     [SerializeField] private LevelCompleter _completer;
 
     private void OnValidate()
     {
-        if(_player == null)
-            throw new System.Exception($"Не назначен игрок на объекте {gameObject}");
-        if(_completer == null)
-            throw new System.Exception($"Не назначен объект завершающий уровень на объекте {gameObject}");
+        _playerWallet = FindObjectOfType<PlayerWallet>();
+        _completer = FindObjectOfType<LevelCompleter>();
 
     }
 
     private void OnEnable()
     {
-        _player.MoneyChanged += OnChangeMoney;
+        _playerWallet.MoneyChanged += OnChangeMoney;
         _completer.LevelCompleted += OnLevelComplete;
     }
 
     private void OnDisable()
     {
-        _player.MoneyChanged -= OnChangeMoney;
+        _playerWallet.MoneyChanged -= OnChangeMoney;
         _completer.LevelCompleted -= OnLevelComplete;
     }
 

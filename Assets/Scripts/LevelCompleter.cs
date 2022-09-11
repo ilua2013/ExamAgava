@@ -3,22 +3,20 @@ using UnityEngine;
 
 public class LevelCompleter : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerWallet _playerWallet;
 
     private Coin[] _coins;
-    private int _currentCollectedCoins;
 
     public event Action LevelCompleted;
 
     private void OnValidate()
     {
-        if (_player == null)
-            throw new System.Exception($"Не назначен игрок на объекте {gameObject}");
+        _playerWallet = FindObjectOfType<PlayerWallet>();
     }
 
     private void OnEnable()
     {
-        _player.MoneyChanged += OnMoneyChanged;
+        _playerWallet.MoneyChanged += OnMoneyChanged;
     }
 
     private void Start()
@@ -28,19 +26,19 @@ public class LevelCompleter : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.MoneyChanged -= OnMoneyChanged;
+        _playerWallet.MoneyChanged -= OnMoneyChanged;
 
     }
 
     private void OnMoneyChanged(int amount)
     {
-        _currentCollectedCoins++;
-        TryCompleteLevel();
-    }
+        int currentTakenCoins = 0;
 
-    private void TryCompleteLevel()
-    {
-        if(_currentCollectedCoins == _coins.Length)
+        foreach(Coin coin in _coins)
+            if (coin.IsTaken == true)
+                currentTakenCoins++;
+
+        if (currentTakenCoins == _coins.Length)
             LevelCompleted?.Invoke();
     }
 }
