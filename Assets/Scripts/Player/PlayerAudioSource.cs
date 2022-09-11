@@ -1,16 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEffector : MonoBehaviour
+[RequireComponent(typeof(AudioSource))]
+public class PlayerAudioSource : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _particleWalk;
     [SerializeField] private PlayerMover _playerMover;
+
+    private AudioSource _source;
 
     private void OnValidate()
     {
-        if(_particleWalk == null)
-            throw new System.Exception($"Не назначен particle на объекте {gameObject}");
-
         _playerMover = FindObjectOfType<PlayerMover>();
+    }
+
+    private void Start()
+    {
+        _source = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -27,11 +33,11 @@ public class PlayerEffector : MonoBehaviour
 
     private void OnMoveStarted()
     {
-        _particleWalk.Play();
+        _source.Play();
     }
 
     private void OnMoveFinished()
     {
-        _particleWalk.Stop();
+        _source.Stop();
     }
 }
