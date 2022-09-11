@@ -4,6 +4,8 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int _health;
 
+    public int Value => _health;   
+
     private void ApplyDamage(int damage)
     {
         if (damage > 0)

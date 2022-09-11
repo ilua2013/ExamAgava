@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayersInfoDisplayer : MonoBehaviour
+public class UIPlayersInfo : MonoBehaviour
 {
     [SerializeField] private PlayerInfoView _template;
     [SerializeField] private GameObject _container;
@@ -32,6 +32,26 @@ public class PlayersInfoDisplayer : MonoBehaviour
     private void AddInfo(Player player)
     {
         PlayerInfoView view = Instantiate(_template, _container.transform);
-        view.FillTemplate(player.Name, player.Money, player.Health);
+
+        int money = GetPlayerMoney(player);
+        int health = GetPlayerHealth(player);
+
+        view.FillTemplate(player.Name, money, health);
+    }
+
+    private int GetPlayerMoney(Player player)
+    {
+        if (player.TryGetComponent<PlayerWallet>(out PlayerWallet wallet))
+            return wallet.Money;
+        else
+            return 0;
+    }
+
+    private int GetPlayerHealth(Player player)
+    {
+        if (player.TryGetComponent<PlayerHealth>(out PlayerHealth health))
+            return health.Value;
+        else
+            return 0;
     }
 }
