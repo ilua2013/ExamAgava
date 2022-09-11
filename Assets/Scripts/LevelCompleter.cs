@@ -16,7 +16,7 @@ public class LevelCompleter : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerWallet.MoneyChanged += OnMoneyChanged;
+        _playerWallet.MoneyChanged_getMoney += OnMoneyChanged;
     }
 
     private void Start()
@@ -26,8 +26,7 @@ public class LevelCompleter : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerWallet.MoneyChanged -= OnMoneyChanged;
-
+        _playerWallet.MoneyChanged_getMoney -= OnMoneyChanged;
     }
 
     private void OnMoneyChanged(int amount)

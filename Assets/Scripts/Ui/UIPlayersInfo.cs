@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIPlayersInfo : MonoBehaviour
 {
-    [SerializeField] private PlayerInfoView _template;
+    [SerializeField] private UIPlayerInfoView _template;
     [SerializeField] private GameObject _container;
 
     private Player[] _players;
@@ -31,12 +31,12 @@ public class UIPlayersInfo : MonoBehaviour
 
     private void AddInfo(Player player)
     {
-        PlayerInfoView view = Instantiate(_template, _container.transform);
+        UIPlayerInfoView view = Instantiate(_template, _container.transform);
 
         int money = GetPlayerMoney(player);
         int health = GetPlayerHealth(player);
 
-        view.FillTemplate(player.Name, money, health);
+        view.Initialize(player.Name, money, health);
     }
 
     private int GetPlayerMoney(Player player)

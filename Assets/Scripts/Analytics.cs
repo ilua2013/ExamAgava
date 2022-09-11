@@ -14,13 +14,13 @@ public class Analytics : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerWallet.MoneyChanged += OnChangeMoney;
+        _playerWallet.MoneyChanged_getMoney += OnChangeMoney;
         _completer.LevelCompleted += OnLevelComplete;
     }
 
     private void OnDisable()
     {
-        _playerWallet.MoneyChanged -= OnChangeMoney;
+        _playerWallet.MoneyChanged_getMoney -= OnChangeMoney;
         _completer.LevelCompleted -= OnLevelComplete;
     }
 

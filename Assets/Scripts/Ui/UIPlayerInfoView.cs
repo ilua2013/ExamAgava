@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerInfoView : MonoBehaviour
+public class UIPlayerInfoView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _playerName;
     [SerializeField] private TMP_Text _playerMoney;
@@ -17,7 +17,7 @@ public class PlayerInfoView : MonoBehaviour
             throw new System.Exception($"Не назначен текст отображения здоровья игрока на объекте {gameObject}");
     }
 
-    public void FillTemplate(string name, int money, int health)
+    public void Initialize(string name, int money, int health)
     {
         _playerName.text = name;
         _playerMoney.text = money.ToString();

@@ -6,7 +6,7 @@ public class PlayerWallet : MonoBehaviour
 {
     private int _money;
 
-    public event Action<int> MoneyChanged;
+    public event Action<int> MoneyChanged_getMoney;
 
     public int Money => _money;
 
@@ -25,6 +25,6 @@ public class PlayerWallet : MonoBehaviour
         _money = value;
         SaveProgress.Money = _money;
 
-        MoneyChanged?.Invoke(_money);
+        MoneyChanged_getMoney?.Invoke(_money);
     }
 }

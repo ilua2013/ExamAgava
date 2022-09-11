@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerInfoButton : MonoBehaviour
+public class UIPlayerInfoButton : MonoBehaviour
 {
     [SerializeField] private Button _infoButton;
     [SerializeField] private GameObject _infoPanel;
@@ -9,7 +9,7 @@ public class PlayerInfoButton : MonoBehaviour
     private void OnValidate()
     {
         if(_infoPanel == null)
-            throw new System.Exception($"Не назначена панель информации на объекте {gameObject}");
+            _infoPanel = FindObjectOfType<UIPlayersInfo>().gameObject;
         if(_infoButton == null)
             throw new System.Exception($"Не назначена кнопка объекте {gameObject}");
     }
@@ -26,6 +26,9 @@ public class PlayerInfoButton : MonoBehaviour
 
     private void OnInfoButtonClick()
     {
-        _infoPanel.SetActive(true);
+        if (_infoPanel.activeSelf == true)
+            _infoPanel.SetActive(false);
+        else
+            _infoPanel.SetActive(true);
     }
 }
