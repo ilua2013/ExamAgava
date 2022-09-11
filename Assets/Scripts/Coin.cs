@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] private int _ammount;
+    [SerializeField, Min(1)] private int _ammount;
 
-    private void OnValidate()
+    private void OnCollisionEnter(Collision collision)
     {
-        if(_ammount <= 0)
-            throw new System.Exception($"Неверно назначено значение на объекте {gameObject}");
+        if(collision.collider.TryGetComponent<PlayerWallet>(out PlayerWallet wallet))
+        {
+            wallet.AddMoney(_ammount);
+            Destroy(gameObject);
+        }    
     }
-
-    public int Ammount => _ammount;
 }
