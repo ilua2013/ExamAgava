@@ -1,16 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Analytics : MonoBehaviour
 {
-    public void OnLevelComplete()
+    [SerializeField] private PlayerWallet _playerWallet;
+    [SerializeField] private LevelCompleter _completer;
+
+    private void OnValidate()
     {
-        print("Всё выдержали нахуй, ахуенно, вот это парилка нахуй, эхх, за этой парилкой и надо жить");
+        _playerWallet = FindObjectOfType<PlayerWallet>();
+        _completer = FindObjectOfType<LevelCompleter>();
+
     }
 
-    public void OnChangeMoney()
+    private void OnEnable()
     {
-        print("Рубль будет хэ-хэ");
+        _playerWallet.MoneyChanged_getMoney += OnChangeMoney;
+        _completer.LevelCompleted += OnLevelComplete;
+    }
+
+    private void OnDisable()
+    {
+        _playerWallet.MoneyChanged_getMoney -= OnChangeMoney;
+        _completer.LevelCompleted -= OnLevelComplete;
+    }
+
+    private void OnLevelComplete()
+    {
+        //Send on server
+    }
+
+    private void OnChangeMoney(int money)
+    {
+        //Send on server
     }
 }

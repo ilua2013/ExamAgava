@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField, Min(1)] private int _ammount;
 
-    // Update is called once per frame
-    void Update()
+    public bool IsTaken { get; private set; }
+
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if(collision.collider.TryGetComponent<PlayerWallet>(out PlayerWallet wallet))
+        {
+            wallet.AddMoney(_ammount);
+            gameObject.SetActive(false);
+            IsTaken = true;
+        }    
     }
 }
