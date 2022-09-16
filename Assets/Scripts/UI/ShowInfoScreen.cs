@@ -1,71 +1,54 @@
 ﻿using Hero;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace UI
 {
-    public class ShowInfoScreen : Screen
+    public class ShowInfoScreen : MonoBehaviour
     {
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private Button _button;
         [SerializeField] private PlayerInfoView _template;
         [SerializeField] private GameObject _container;
-        [SerializeField] private Player[] _players;
+        [SerializeField] private PlayerInfo[] _playerInfos;
+
+        private void OnValidate()
+        {
+            _playerInfos = FindObjectsOfType<PlayerInfo>();
+        }
 
         private void Start()
         {
+            Close();
             AddPlayersToContainer();
         }
 
-        public event UnityAction ShowInfoButtonClick;
-
         private void AddPlayersToContainer()
         {
-            for (int i = 0; i < _players.Length; i++)
+            foreach (var playerInfo in _playerInfos)
             {
-                AddPlayerInfo(_players[i]);
+                AddPlayerInfo(playerInfo);
             }
         }
 
-        private void AddPlayerInfo(Player player)
+        private void AddPlayerInfo(PlayerInfo playerInfo)
         {
             PlayerInfoView view = Instantiate(_template, _container.transform);
-            int money = GetPlayerMoney(player);
-            int health = GetPlayerHealth(player);
-            view.Initialize(player.name, money, health);
+            view.Initialize(playerInfo.name, playerInfo.Money, playerInfo.Health);
         }
 
-        private int GetPlayerMoney(Player player)
+        private void Open()
         {
-            if (player.TryGetComponent(out PlayerWallet wallet))
-                return wallet.Money;
-
-            return 0;
+            _canvasGroup.alpha = 1f;
+            _canvasGroup.blocksRaycasts = true;
+            _button.interactable = false;
         }
 
-        private int GetPlayerHealth(Player player)
+        private void Close()
         {
-            if (player.TryGetComponent(out PlayerHealth health))
-                return health.Value;
-
-            return 0;
-        }
-
-        protected override void OnButtonClick()
-        {
-            ShowInfoButtonClick?.Invoke();
-        }
-
-        public override void Open()
-        {
-            CanvasGroup.alpha = 1f;
-            CanvasGroup.blocksRaycasts = true;
-            Button.interactable = false;
-        }
-
-        public override void Close()
-        {
-            CanvasGroup.alpha = 0f;
-            CanvasGroup.blocksRaycasts = false;
-            Button.interactable = true;
+            _canvasGroup.alpha = 0f;
+            _canvasGroup.blocksRaycasts = false;
+            _button.interactable = true;
         }
     }
 }

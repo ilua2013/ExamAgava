@@ -1,4 +1,5 @@
-﻿using Hero;
+﻿using System;
+using Hero;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ namespace UI
         private void OnDisable()
         {
             _playerWallet.MoneyChanged -= OnMoneyChanged;
+        }
+
+        private void Start()
+        {
+            _textMoney.text = _playerWallet.Money.ToString();
         }
 
         private void OnMoneyChanged(int money)

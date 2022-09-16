@@ -1,36 +1,37 @@
 ﻿using System;
+using Interactions;
 using UnityEngine;
 
 namespace Hero
 {
     public class PlayerWallet : MonoBehaviour
     {
-        private readonly string _moneyKey = "Money";
-        public int Money { get; private set; }
+        private int _money;
+
+        public int Money => _money;
 
         public event Action<int> MoneyChanged;
 
         private void Awake()
         {
-            GetMoney();
+            GetMoneyFromSave();
         }
 
         public void AddMoney(int money)
         {
-            Money += money;
-            SetMoney();
-            MoneyChanged?.Invoke(Money);
+            SetMoney(_money + money);
+            MoneyChanged?.Invoke(_money);
         }
 
-        private void GetMoney()
+        private void GetMoneyFromSave()
         {
-            Money = PlayerPrefs.GetInt(_moneyKey);
-            MoneyChanged?.Invoke(Money);
+            _money = SaveProgress.Money;
         }
 
-        private void SetMoney()
+        private void SetMoney(int value)
         {
-            PlayerPrefs.SetInt(_moneyKey, Money);
+            _money = value;
+            SaveProgress.Money = _money;
         }
     }
 }

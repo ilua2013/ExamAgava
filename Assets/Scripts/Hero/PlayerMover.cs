@@ -11,7 +11,7 @@ namespace Hero
         private PlayerInput _playerInput;
         private Rigidbody _rigidbody;
 
-        public bool IsMoving => _playerInput.Axis.magnitude > Constants.Epsilon;
+        public bool IsMoving => _playerInput.Axis != Vector3.zero;
 
         private void Awake()
         {
@@ -26,10 +26,7 @@ namespace Hero
 
         private void Move()
         {
-            if (IsMoving)
-            {
-                _rigidbody.velocity = _playerInput.Axis * _speed;
-            }
+            _rigidbody.velocity = _playerInput.Axis * _speed;
         }
     }
 }

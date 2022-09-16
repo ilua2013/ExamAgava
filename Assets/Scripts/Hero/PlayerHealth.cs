@@ -4,9 +4,9 @@ namespace Hero
 {
     public class PlayerHealth : MonoBehaviour
     {
-        [SerializeField] private int _health;
+        [SerializeField,Min(0)] private int _health;
 
-        public int Value => _health;
+        public int Health => _health;
 
         public void ApplyDamage(int damage)
         {

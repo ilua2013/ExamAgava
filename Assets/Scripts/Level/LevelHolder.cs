@@ -1,42 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hero;
-using Interations;
+using Interactions;
 using UnityEngine;
 
 namespace Level
 {
     public class LevelHolder : MonoBehaviour
     {
-        [SerializeField] private PlayerCollisionHandler _playerCollisionHandler;
         [SerializeField] private List<Coin> _coins;
-
-        public event Action LevelCompleted;
 
         private void OnEnable()
         {
-            _playerCollisionHandler.CoinPickedUp += OnCoinPickedUp;
+            foreach (var coin in _coins)
+            {
+                coin.Taked += OnCoinPickedUp;
+            }
         }
 
         private void OnDisable()
         {
-            _playerCollisionHandler.CoinPickedUp -= OnCoinPickedUp;
+            foreach (var coin in _coins)
+            {
+                coin.Taked -= OnCoinPickedUp;
+            }
         }
+
+        private void OnValidate()
+        {
+            _coins = new List<Coin>(FindObjectsOfType<Coin>());
+        }
+
+        public event Action LevelCompleted;
 
         private void OnCoinPickedUp(Coin coin)
         {
-            if (_coins.Count > 0 && _coins != null)
+            if (_coins.Count > 0 && _coins != null && _coins.Contains(coin))
             {
                 _coins.Remove(coin);
 
                 if (_coins.Count <= 0)
                 {
-                    LevelEnd();
+                    CompleteLevel();
                 }
             }
         }
 
-        private void LevelEnd()
+        private void CompleteLevel()
         {
             LevelCompleted?.Invoke();
             print("Level Complete");
