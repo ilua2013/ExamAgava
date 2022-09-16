@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hero;
+using Interations;
 using UnityEngine;
 
 namespace Level
