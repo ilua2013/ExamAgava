@@ -6,11 +6,6 @@ namespace UI
     {
         [SerializeField] private ShowInfoScreen _showInfoScreen;
 
-        private void Start()
-        {
-            _showInfoScreen.Close();
-        }
-
         private void OnEnable()
         {
             _showInfoScreen.ShowInfoButtonClick += OnShowInfoButtonClick;
@@ -19,6 +14,11 @@ namespace UI
         private void OnDisable()
         {
             _showInfoScreen.ShowInfoButtonClick -= OnShowInfoButtonClick;
+        }
+
+        private void Start()
+        {
+            _showInfoScreen.Close();
         }
 
         private void OnShowInfoButtonClick()

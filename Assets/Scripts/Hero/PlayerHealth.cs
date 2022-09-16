@@ -8,7 +8,7 @@ namespace Hero
 
         public int Value => _health;
 
-        private void ApplyDamage(int damage)
+        public void ApplyDamage(int damage)
         {
             _health -= damage;
 

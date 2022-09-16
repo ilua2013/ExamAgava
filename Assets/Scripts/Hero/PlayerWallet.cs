@@ -15,16 +15,16 @@ namespace Hero
             GetMoney();
         }
 
-        private void GetMoney()
-        {
-            Money = PlayerPrefs.GetInt(_moneyKey);
-            MoneyChanged?.Invoke(Money);
-        }
-
         public void AddMoney(int money)
         {
             Money += money;
             SetMoney();
+            MoneyChanged?.Invoke(Money);
+        }
+
+        private void GetMoney()
+        {
+            Money = PlayerPrefs.GetInt(_moneyKey);
             MoneyChanged?.Invoke(Money);
         }
 

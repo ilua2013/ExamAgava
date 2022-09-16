@@ -3,17 +3,23 @@ using UnityEngine;
 
 namespace Hero
 {
+    [RequireComponent(typeof(Player))]
     public class PlayerCollisionHandler : MonoBehaviour
     {
-        [SerializeField] private PlayerWallet _playerWallet;
+        private Player _player;
 
         public event Action<Coin> CoinPickedUp;
+
+        private void Awake()
+        {
+            _player = GetComponent<Player>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out Coin coin))
             {
-                _playerWallet.AddMoney(coin.Value);
+                _player.AddToWallet(coin.Value);
                 CoinPickedUp?.Invoke(coin);
             }
         }

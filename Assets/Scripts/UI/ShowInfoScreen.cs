@@ -12,26 +12,24 @@ namespace UI
 
         private void Start()
         {
-            AddPlayersInfo();
+            AddPlayersToContainer();
         }
 
         public event UnityAction ShowInfoButtonClick;
 
-        private void AddPlayersInfo()
+        private void AddPlayersToContainer()
         {
             for (int i = 0; i < _players.Length; i++)
             {
-                AddInfo(_players[i]);
+                AddPlayerInfo(_players[i]);
             }
         }
 
-        private void AddInfo(Player player)
+        private void AddPlayerInfo(Player player)
         {
             PlayerInfoView view = Instantiate(_template, _container.transform);
-
             int money = GetPlayerMoney(player);
             int health = GetPlayerHealth(player);
-
             view.Initialize(player.name, money, health);
         }
 
